@@ -1,7 +1,8 @@
 
 
 query_writer <- function(metric, mlab_location, AS, start_time, end_time,
-                         country = 'US' ) {
+                         country = 'US' ) 
+      {
       # This function takes as input the metric, mlab_location, AS number, 
       # start_time, end_time and the optional country (the default 
       # country is set to US)
@@ -142,10 +143,11 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
        #FINDING MLAB SERVER IPS
       servers <- read.csv("MLabServers.csv")
       cond<- (servers$City == mlab_location & servers$AS == AS)
-      if (nrow(na.omit(servers[cond,])) == 0 {
+      if (nrow(na.omit(servers[cond,])) == 0 ){
             print("There are no MLab servers satisfying the conditions entered.")
             return()
-      }  else {
+      }  
+      else {
            ips <- as.character(na.omit(servers[cond,])$IP)
       }
       
@@ -193,3 +195,7 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
      
       
 }
+
+args <- commandArgs(trailingOnly = TRUE)
+#cat(typeof(args[3]), "\n")
+query_writer(args[1], args[2], as.integer(args[3]), args[4], args[5])
