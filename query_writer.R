@@ -21,6 +21,7 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
       #The basic query for download throughput
       dtp_basic_query<-
       "SELECT
+      web100_log_entry.log_time AS log_time,
       web100_log_entry.connection_spec.remote_ip AS remote_ip,
       web100_log_entry.connection_spec.local_ip AS local_ip,
       8 * (web100_log_entry.snap.HCThruOctetsAcked /
@@ -58,6 +59,7 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
       #The basic query for finding round trip time 
       rtt_basic_query <-
       "SELECT
+      web100_log_entry.log_time AS log_time,
       web100_log_entry.connection_spec.remote_ip AS remote_ip,
       web100_log_entry.connection_spec.local_ip AS local_ip,
       web100_log_entry.snap.MinRTT AS min_rtt
@@ -93,6 +95,7 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
       #The basic query for packet retransmission 
       prt_basic_query <-
       "SELECT
+      web100_log_entry.log_time AS log_time,
       web100_log_entry.connection_spec.remote_ip AS remote_ip,
       web100_log_entry.connection_spec.local_ip AS local_ip,
       (web100_log_entry.snap.SegsRetrans / web100_log_entry.snap.DataSegsOut) AS packet_retransmission_rate
@@ -197,5 +200,4 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
 }
 
 args <- commandArgs(trailingOnly = TRUE)
-#cat(typeof(args[3]), "\n")
 query_writer(args[1], args[2], as.integer(args[3]), args[4], args[5])
