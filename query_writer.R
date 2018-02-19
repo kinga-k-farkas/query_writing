@@ -22,8 +22,10 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
       dtp_basic_query<-
       "SELECT
       web100_log_entry.log_time AS log_time,
-      web100_log_entry.connection_spec.remote_ip AS remote_ip,
-      web100_log_entry.connection_spec.local_ip AS local_ip,
+      connection_spec_client_geolocation.city  AS client_city,
+      connection_spec_client_geolocation.area_code As client_area_code,
+      web100_log_entry.connection_spec.remote_ip AS client_ip,
+      web100_log_entry.connection_spec.local_ip AS MLab_ip,
       8 * (web100_log_entry.snap.HCThruOctetsAcked /
       (web100_log_entry.snap.SndLimTimeRwin +
       web100_log_entry.snap.SndLimTimeCwnd +
@@ -60,8 +62,10 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
       rtt_basic_query <-
       "SELECT
       web100_log_entry.log_time AS log_time,
-      web100_log_entry.connection_spec.remote_ip AS remote_ip,
-      web100_log_entry.connection_spec.local_ip AS local_ip,
+      connection_spec_client_geolocation_city  AS client_city,
+      connection_spec_client_geolocation_area_code As client_area_code,
+      web100_log_entry.connection_spec.remote_ip AS client_ip,
+      web100_log_entry.connection_spec.local_ip AS MLab_ip,
       web100_log_entry.snap.MinRTT AS min_rtt
       FROM
       [plx.google:m_lab.ndt.all]
@@ -96,8 +100,10 @@ query_writer <- function(metric, mlab_location, AS, start_time, end_time,
       prt_basic_query <-
       "SELECT
       web100_log_entry.log_time AS log_time,
-      web100_log_entry.connection_spec.remote_ip AS remote_ip,
-      web100_log_entry.connection_spec.local_ip AS local_ip,
+      connection_spec_client_geolocation_city  AS client_city,
+      connection_spec_client_geolocation_area_code As client_area_code,
+      web100_log_entry.connection_spec.remote_ip AS client_ip,
+      web100_log_entry.connection_spec.local_ip AS MLab_ip,
       (web100_log_entry.snap.SegsRetrans / web100_log_entry.snap.DataSegsOut) AS packet_retransmission_rate
       FROM
       [plx.google:m_lab.ndt.all]
